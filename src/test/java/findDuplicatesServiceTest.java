@@ -18,7 +18,7 @@ import static org.testng.AssertJUnit.assertEquals;
 public class findDuplicatesServiceTest {
 
     @Test
-    public void test() {
+    public void fullDataTest() {
         List<Contact> contacts = ContactService.getContacts();
         List<ContactMatch> matches = FindDuplicatesService.findPossibleMatches(contacts);
         Map<String, Integer> contactsMatches = FindDuplicatesService.countAccuracyLevels(matches);
@@ -29,11 +29,30 @@ public class findDuplicatesServiceTest {
     }
 
     @Test
-    public void test2() {
+    public void testDataExample() {
         List<Contact> contacts = new ArrayList<>();
         contacts.add(new Contact(1001, "C", "F", "mollis.lectus.pede@outlook.net", null, "449-6990 Tellus. Rd."));
         contacts.add(new Contact(1002, "C", "French", "mollis.lectus.pede@outlook.net", "39746", "449-6990 Tellus. Rd."));
         contacts.add(new Contact(1003, "Ciara", "F", "non.lacinia.at@zoho.ca", "39746", null));
+
+        List<ContactMatch> matches = FindDuplicatesService.findPossibleMatches(contacts);
+        Map<String, Integer> contactsMatches = FindDuplicatesService.countAccuracyLevels(matches);
+        assertEquals(2, matches.size());
+        assertEquals(Optional.of(1).get(), contactsMatches.get("High"));
+        assertEquals(Optional.of(0).get(), contactsMatches.get("Medium"));
+        assertEquals(Optional.of(1).get(), contactsMatches.get("Low"));
+        for (ContactMatch match : matches) {
+            System.out.println(match);
+        }
+    }
+
+    @Test
+    public void OtherTest() {
+        List<Contact> contacts = new ArrayList<>();
+        contacts.add(new Contact(1001, "C", "F", "mollis.lectus.pede@outlook.net", null, "449-6990 Tellus. Rd."));
+        contacts.add(new Contact(1002, "C", "French", "mollis.lectus.pede@gmail.net", "39746", "449-6990 Tellus. Rd."));
+        contacts.add(new Contact(1003, "Ciara", "F", "non.lacinia.at@zoho.ca", "39746", null));
+        contacts.add(new Contact(1004, "Chiara", "F", "non.lacinia.at@zoho.ca", "39746", null));
 
         List<ContactMatch> matches = FindDuplicatesService.findPossibleMatches(contacts);
         Map<String, Integer> contactsMatches = FindDuplicatesService.countAccuracyLevels(matches);

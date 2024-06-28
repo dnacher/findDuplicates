@@ -128,7 +128,7 @@ public class FindDuplicatesService {
      */
     private static int matchNameOrSurname(String name1, String name2, int fullScore, int partialScore) {
         if (name1 != null && name2 != null) {
-            if (name1.equals(name2)) {
+            if (name1.equalsIgnoreCase(name2)) {
                 return fullScore;
             } else if (name1.length() == 1 && name2.startsWith(name1)) {
                 return partialScore;
@@ -153,7 +153,7 @@ public class FindDuplicatesService {
      */
     private static int matchEmail(String email1, String email2) {
         if (email1 != null && email2 != null) {
-            if (email1.equals(email2)) {
+            if (email1.equalsIgnoreCase(email2)) {
                 return EMAIL_MATCH_FULL;
             } else {
                 String[] emailParts1 = email1.split("@");
@@ -199,7 +199,7 @@ public class FindDuplicatesService {
      */
     private static int matchAddress(String address1, String address2) {
         if (address1 != null && address2 != null) {
-            if (address1.equals(address2)) {
+            if (address1.equalsIgnoreCase(address2)) {
                 return ADDRESS_MATCH_FULL;
             } else if (address1.contains(address2) || address2.contains(address1)) {
                 return ADDRESS_MATCH_PARTIAL;
